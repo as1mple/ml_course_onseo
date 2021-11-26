@@ -1,7 +1,8 @@
 from fastapi import FastAPI
+from fastapi.responses import JSONResponse
 from loguru import logger
 
-from .modules.data_models import Message
+from .modules.data_models import Message, RequestCalc, ResponseCalc
 
 DEFAULT_RESPONSES = {500: {'model': Message}}
 
@@ -15,3 +16,14 @@ def health():
     logger.info("Health check")
     return Message(message="Success")
 
+
+@app.post("/api/v1/sum", response_model=ResponseCalc, responses={**DEFAULT_RESPONSES})
+def calc_sum(sum_request: RequestCalc):
+    logger.info("SUM")
+
+    try:
+        res = sum_request.number_1 + sum_request.number_2
+        return ResponseCalc(res=res)
+    except Exception as e:
+        logger.exception(str(e))
+        return JSONResponse(status_code=500, content={'message': str(e)})
