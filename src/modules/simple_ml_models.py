@@ -5,7 +5,11 @@ Simple ML Models
 
 class HousePriceModel:
 
-    def __call__(self, area: float, n_floors: int, heating: str):
+    def __call__(self, area: float, n_floors: int, heating: str) -> object:
+        """
+
+        :rtype: object
+        """
         heating_map = {
             'A': 100,
             'B': 50,
@@ -29,4 +33,7 @@ class SentimentModel:
     def __call__(self, text: str):
         lower_text = text.lower()
         total_score = sum(value for key, value in self.word_map.items() if key in lower_text)
-        return 1 if total_score > 0 else -1 if total_score < 0 else 0
+        sentiment = 1 if total_score > 0 else -1 if total_score < 0 else 0
+        return {"sentiment": sentiment,
+                "score": total_score
+                }
