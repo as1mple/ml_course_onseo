@@ -29,4 +29,7 @@ class SentimentModel:
     def __call__(self, text: str):
         lower_text = text.lower()
         total_score = sum(value for key, value in self.word_map.items() if key in lower_text)
-        return 1 if total_score > 0 else -1 if total_score < 0 else 0
+        sentiment = 1 if total_score > 0 else -1 if total_score < 0 else 0
+        return {"sentiment": sentiment,
+                "score": total_score
+                }
