@@ -5,7 +5,11 @@ Simple ML Models
 
 class HousePriceModel:
 
-    def __call__(self, area: float, n_floors: int, heating: str):
+    def __call__(self, area: float, n_floors: int, heating: str) -> object:
+        """
+
+        :rtype: object
+        """
         heating_map = {
             'A': 100,
             'B': 50,
